@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.animation import PillowWriter
 
-hw = 8
+hw = 6
 N = hw ** 2
-Sigma = 0.8
+Sigma = 0.9
 RateLearn = 0.3
 field = hw
 dimension = 2
@@ -77,8 +77,19 @@ while True:
 
     
     lines = []
-    for i in range(N):
+    for i in range(hw):
+        for j in range(hw):
+            for k in range(dimension):
+                if k == 0:
+                    ytmps.append(m[i+hw*j][k])
+                else:
+                    xtmps.append(m[i+hw*j][k])
+        im = plt.plot(ytmps,xtmps,marker="o",color="red")
+        lines.extend(im)
+        ytmps=[]
+        xtmps=[]
 
+    for i in range(N):
         for j in range(dimension):
             if j == 0:
                 ytmps.append(m[i][j])
@@ -87,6 +98,9 @@ while True:
         if i%hw == hw-1:
             im = plt.plot(ytmps,xtmps,marker="o",color="red")
             lines.extend(im)
+            ytmps=[]
+            xtmps=[]
+
     ims.append(lines)
     
     counter += 1
